@@ -1,36 +1,71 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Adicionar Contato</ion-title>
+    <ion-title size="large">Novo contato</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="toggleDark()">
+        <ion-icon name="moon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content [fullscreen]="true" class="ion-padding fade-up">
+  <div class="app-glass" style="padding: 16px">
+    <ion-list
+      lines="inset"
+      class="ion-margin-vertical"
+      style="background: transparent"
+    >
+      <ion-item>
+        <ion-label position="floating">Nome</ion-label>
+        <ion-input [(ngModel)]="nome" required></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">E-mail</ion-label>
+        <ion-input [(ngModel)]="email" type="email" required></ion-input>
+      </ion-item>
+    </ion-list>
 
-  <ion-item>
-    <ion-label position="floating">Nome</ion-label>
-    <ion-input [(ngModel)]="nome"></ion-input>
-  </ion-item>
+    <ion-button
+      expand="block"
+      color="primary"
+      (click)="adicionarContato()"
+      [disabled]="!nome || !email"
+    >
+      <ion-icon name="save-outline" slot="start"></ion-icon>
+      Salvar
+    </ion-button>
+  </div>
 
-  <ion-item>
-    <ion-label position="floating">Email</ion-label>
-    <ion-input [(ngModel)]="email"></ion-input>
-  </ion-item>
+  <ion-list class="ion-margin-top">
+    <ion-item lines="none">
+      <ion-label><h2 style="font-weight: 700">Seus contatos</h2></ion-label>
+    </ion-item>
 
-  <ion-button expand="block" color="primary" (click)="adicionarContato()">
-    Adicionar Contato
-  </ion-button>
-
-  <ion-list *ngIf="contatos.length > 0">
-    <ion-item *ngFor="let c of contatos">
+    <ion-item *ngFor="let c of contatos" class="app-glass">
       <ion-label>
-        <h2>{{ c.nome }}</h2>
+        <h2 style="font-weight: 700">{{ c.nome }}</h2>
         <p>{{ c.email }}</p>
       </ion-label>
-      <ion-button color="danger" fill="outline" (click)="deletarContato(c.id)">Excluir</ion-button>
+      <ion-buttons slot="end">
+        <ion-button
+          color="danger"
+          fill="outline"
+          (click)="deletarContato(c.id)"
+        >
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Excluir
+        </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 
-  <ion-button color="primary" [routerLink]="['/listar-contatos']">
-    Listar Contatos
+  <ion-button
+    fill="clear"
+    [routerLink]="['/listar-contatos']"
+    class="ion-margin-top"
+  >
+    <ion-icon name="chevron-back-outline" slot="start"></ion-icon>
+    Voltar
   </ion-button>
 </ion-content>

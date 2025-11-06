@@ -1,18 +1,79 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Listar Contatos</ion-title>
+    <ion-title size="large">Contatos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" [routerLink]="['/adicionar-contato']">
+        <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+        Novo
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar class="app-glass" style="margin: 0 12px; border-radius: 16px">
+    <ion-searchbar
+      [(ngModel)]="query"
+      placeholder="Buscar contato"
+    ></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-list>
-    <ion-item *ngFor="let user of usuarios">
+<ion-content [fullscreen]="true" class="fade-up">
+  <ion-list *ngIf="loading">
+    <ion-item *ngFor="let s of [0,1,2,3]" class="app-glass">
+      <ion-avatar slot="start">
+        <ion-skeleton-text
+          animated
+          style="width: 48px; height: 48px"
+        ></ion-skeleton-text>
+      </ion-avatar>
       <ion-label>
-        <h2>{{ user.name }}</h2>
-        <p>{{ user.email }}</p>
+        <h2>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </h2>
+        <p>
+          <ion-skeleton-text animated style="width: 40%"></ion-skeleton-text>
+        </p>
       </ion-label>
     </ion-item>
   </ion-list>
 
-  <ion-button [routerLink]="['/adicionar-contato']">Adicionar Contatos</ion-button>
+  <ion-list *ngIf="!loading">
+    <ion-item-sliding
+      *ngFor="let c of contatos | userFilter:query; trackBy: trackById"
+    >
+      <ion-item button detail="false" class="app-glass">
+        <ion-avatar slot="start">
+          <img
+            [src]="'https://i.pravatar.cc/80?u='+c.email"
+            alt="avatar"
+            loading="lazy"
+          />
+        </ion-avatar>
+        <ion-label>
+          <h2 style="font-weight: 700">
+            {{ c.name }}
+            <ion-badge
+              *ngIf="c.source==='firebase'"
+              color="primary"
+              style="margin-left: 8px"
+              >meu</ion-badge
+            >
+          </h2>
+          <p>{{ c.email }}</p>
+        </ion-label>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="excluir(c)">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['/adicionar-contato']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

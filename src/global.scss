@@ -34,4 +34,64 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+/* Glass card util */
+.app-glass {
+  background: var(--app-glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: var(--app-glass-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Toolbar “flutuante” */
+ion-header ion-toolbar {
+  background: var(--ion-toolbar-background);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Itens com micro-interação */
+ion-item {
+  border-radius: var(--app-radius);
+  margin: 6px 12px;
+  transition: transform 0.12s ease, background 0.2s ease;
+}
+ion-item:active {
+  transform: scale(0.996);
+}
+
+/* Avatar redondo mais “presente” */
+ion-avatar img {
+  border-radius: 50%;
+}
+
+/* Botões arredondados */
+ion-button {
+  --border-radius: 999px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+/* Skeleton com brilho suave */
+ion-skeleton-text {
+  --border-radius: 8px;
+}
+
+/* Fade in básico p/ conteúdo carregado */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fadeUp 0.25s ease both;
+}

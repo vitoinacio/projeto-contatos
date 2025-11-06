@@ -1,26 +1,37 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
+import { Database, ref, push, remove, onValue } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class FirebaseService {
+  constructor(private db: Database) {}
 
-  constructor(private firestore: Firestore) {}
-  
-  addContato(contato: { nome: string; email: string; }) {
-    const contatosRef = collection(this.firestore, 'contatos');
-    return addDoc(contatosRef, contato);
+  addContato(contato: { nome: string; email: string }) {
+    const contatosRef = ref(this.db, 'contatos');
+    return push(contatosRef, contato);
   }
 
   getContatos(): Observable<any[]> {
-    const contatosRef = collection(this.firestore, 'contatos');
-    return collectionData(contatosRef, { idField: 'id' });
+    return new Observable((sub) => {
+      const contatosRef = ref(this.db, 'contatos');
+      const unsubscribe = onValue(
+        contatosRef,
+        (snapshot) => {
+          const val = snapshot.val() || {};
+          const lista = Object.entries(val).map(([id, data]: any) => ({
+            id,
+            ...data,
+          }));
+          sub.next(lista);
+        },
+        (err) => sub.error(err)
+      );
+      return () => unsubscribe();
+    });
   }
 
   deleteContato(id: string) {
-    const contatoDoc = doc(this.firestore, `contatos/${id}`);
-    return deleteDoc(contatoDoc);
+    const contatoRef = ref(this.db, `contatos/${id}`);
+    return remove(contatoRef);
   }
 }
