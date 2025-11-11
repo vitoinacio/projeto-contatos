@@ -16,7 +16,6 @@ import {
 } from '@ionic/angular/standalone';
 import { FirebaseService } from 'src/app/services/firebase/firebase.service';
 import { RouterLink } from '@angular/router';
-import { ContatoItemComponent } from 'src/app/components/contato-item/contato-item.component';
 
 @Component({
   selector: 'app-adicionar-contato',
@@ -36,7 +35,6 @@ import { ContatoItemComponent } from 'src/app/components/contato-item/contato-it
     CommonModule,
     FormsModule,
     RouterLink,
-    ContatoItemComponent,
     IonButton,
     IonIcon,
     IonButtons,
