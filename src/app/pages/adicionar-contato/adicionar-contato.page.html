@@ -16,13 +16,26 @@
       class="ion-margin-vertical"
       style="background: transparent"
     >
+
       <ion-item>
         <ion-label position="floating">Nome</ion-label>
         <ion-input [(ngModel)]="nome" required></ion-input>
       </ion-item>
+
       <ion-item>
         <ion-label position="floating">E-mail</ion-label>
         <ion-input [(ngModel)]="email" type="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Telefone</ion-label>
+        <ion-input
+          [(ngModel)]="telefone"
+          type="tel"
+          inputmode="tel"
+          maxlength="15"
+          required
+        ></ion-input>
       </ion-item>
     </ion-list>
 
@@ -30,7 +43,7 @@
       expand="block"
       color="primary"
       (click)="adicionarContato()"
-      [disabled]="!nome || !email"
+      [disabled]="!nome || !email || !telefone"
     >
       <ion-icon name="save-outline" slot="start"></ion-icon>
       Salvar
@@ -46,13 +59,17 @@
       <ion-label>
         <h2 style="font-weight: 700">{{ c.nome }}</h2>
         <p>{{ c.email }}</p>
+
+        <p>
+          <ion-icon
+            name="call-outline"
+            style="vertical-align: middle; margin-right: 4px"
+          ></ion-icon>
+          {{ c.phone || c.telefone }}
+        </p>
       </ion-label>
       <ion-buttons slot="end">
-        <ion-button
-          color="danger"
-          fill="outline"
-          (click)="deletarContato(c.id)"
-        >
+        <ion-button color="danger" fill="outline" (click)="deletarContato(c.id)">
           <ion-icon name="trash-outline" slot="start"></ion-icon>
           Excluir
         </ion-button>

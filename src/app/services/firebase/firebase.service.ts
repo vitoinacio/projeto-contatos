@@ -2,11 +2,17 @@ import { Injectable } from '@angular/core';
 import { Database, ref, push, remove, onValue } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 
+export interface Contato {
+  nome: string;
+  email: string;
+  phone: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class FirebaseService {
   constructor(private db: Database) {}
 
-  addContato(contato: { nome: string; email: string }) {
+  addContato(contato: Contato) {
     const contatosRef = ref(this.db, 'contatos');
     return push(contatosRef, contato);
   }

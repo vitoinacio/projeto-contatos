@@ -2,6 +2,7 @@
   <ion-label>
     <h2>{{ contato.name || contato.nome }}</h2>
     <p>{{ contato.email }}</p>
+    <p>{{ contato.number }}</p>
   </ion-label>
   <ion-button color="danger" fill="outline" (click)="excluir.emit()"
     >Excluir</ion-button

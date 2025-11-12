@@ -31,6 +31,7 @@ type Contact = {
   id?: string;
   name: string;
   email: string;
+  phone: string;
   source: 'api' | 'firebase';
 };
 
@@ -104,6 +105,7 @@ export class ListarContatosPage implements OnInit {
     const fromApi: Contact[] = (this.apiUsers ?? []).map((u) => ({
       name: u.name,
       email: u.email,
+      phone: u.phone ?? '',
       source: 'api' as const,
     }));
 
@@ -111,6 +113,7 @@ export class ListarContatosPage implements OnInit {
       id: c.id,
       name: c.nome ?? c.name ?? '',
       email: c.email ?? '',
+      phone: c.phone ?? c.telefone ?? '',
       source: 'firebase' as const,
     }));
 

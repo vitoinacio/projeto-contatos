@@ -43,6 +43,7 @@ import { RouterLink } from '@angular/router';
 export class AdicionarContatoPage implements OnInit {
   nome: string = '';
   email: string = '';
+  telefone: string = ''; 
   contatos: any[] = [];
 
   constructor(private firebaseService: FirebaseService) {}
@@ -54,16 +55,21 @@ export class AdicionarContatoPage implements OnInit {
   }
 
   adicionarContato() {
-    if (!this.nome || !this.email) {
+    if (!this.nome || !this.email || !this.telefone) {
       alert('Preencha todos os campos!');
       return;
     }
 
     this.firebaseService
-      .addContato({ nome: this.nome, email: this.email })
+      .addContato({
+        nome: this.nome,
+        email: this.email,
+        phone: this.telefone, 
+      })
       .then(() => {
         this.nome = '';
         this.email = '';
+        this.telefone = ''; 
       })
       .catch((err) => console.error('Erro ao adicionar:', err));
   }
